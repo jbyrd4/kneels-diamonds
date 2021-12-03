@@ -10,7 +10,7 @@ export const KneelDiamonds = () => {
     return `
     <h1>Kneel Diamonds</h1>
     
-    <article class="choices">
+    <article style="display:flex" class="choices">
     <section class="choices__metals options">
     <h2>Metals</h2>
     ${Metals()}
