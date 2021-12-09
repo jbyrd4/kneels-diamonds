@@ -32,3 +32,6 @@ ul {
     font-size: 1rem;
 }
 
+.types {
+  display: flex;
+}
