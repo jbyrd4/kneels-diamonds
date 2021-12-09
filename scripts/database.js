@@ -27,12 +27,18 @@ const database = {
         { id: 4, metal: "Platinum", price: 795.45 },
         { id: 5, metal: "Palladium", price: 1241.0 }
     ],
+    jewleryTypes: [
+        {id: 1, name: "Ring", multiplier: 1},
+        {id: 2, name: "Earring", multiplier: 2},
+        {id: 3, name: "Necklace", multiplier: 4}
+    ],
     customOrders: [
         {
             id: 1,
             metalId: 3,
             sizeId: 2,
             styleId: 3,
+            typeId: 1,
             timestamp: 1614659931693
         }
     ],
@@ -55,6 +61,10 @@ export const getOrders = () => {
     return database.customOrders.map(order => ({...order}))
 }
 
+export const getJewleryTypes = () => {
+    return database.jewleryTypes.map(jewlery => ({...jewlery}))
+}
+
 export const setMetal = (id) => {
     database.orderBuilder.metalId = id
 }
@@ -66,12 +76,21 @@ export const setStyle = (id) => {
 export const setSize = (id) => {
     database.orderBuilder.sizeId = id
 }
+export const setType = (id) => {
+    database.orderBuilder.typeId = id
+}
 
 export const addCustomOrder = () => {
-    const newOrder = {...database.orderBuilder}
+    let newOrder = {...database.orderBuilder}
     newOrder.id = database.customOrders.length + 1
     newOrder.timestamp = Date.now()
-    database.customOrders.push(newOrder)
+    if(newOrder.metalId && newOrder.styleId && newOrder.sizeId && newOrder.typeId) {
+        database.customOrders.push(newOrder)
+        database.orderBuilder = {}
+    }else {
+        window.alert('Not Enough Order Data')
+        database.orderBuilder = {}
+    }
     document.dispatchEvent(new CustomEvent("stateChanged"))
 
 }
